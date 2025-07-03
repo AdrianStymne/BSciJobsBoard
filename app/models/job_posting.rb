@@ -4,7 +4,7 @@ class JobPosting < ApplicationRecord
   validates :title, presence: true, length: { maximum: 255 }
   validates :description, presence: true
   validates :location, presence: true, length: { maximum: 255 }
-  validates :application_url, presence: true, format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]) }
+  validates :application_url, length: { maximum: 500 }
   validates :date_posted, presence: true
   validates :country, length: { maximum: 255 }
   validates :visa_requirement, inclusion: { in: VISA_REQUIREMENTS }

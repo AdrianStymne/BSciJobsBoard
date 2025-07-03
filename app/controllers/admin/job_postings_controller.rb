@@ -18,6 +18,13 @@ class Admin::JobPostingsController < ApplicationController
   def create
     @job_posting = JobPosting.new(job_posting_params)
 
+    # Add validation for admin-created jobs
+    if @job_posting.application_url.blank?
+      @job_posting.errors.add(:application_url, "can't be blank")
+      render :new
+      return
+    end
+
     if @job_posting.save
       redirect_to admin_job_postings_path, notice: "Job posting was successfully created."
     else
@@ -29,6 +36,13 @@ class Admin::JobPostingsController < ApplicationController
   end
 
   def update
+    # Add validation for admin-edited jobs
+    if job_posting_params[:application_url].blank?
+      @job_posting.errors.add(:application_url, "can't be blank")
+      render :edit
+      return
+    end
+
     if @job_posting.update(job_posting_params)
       redirect_to admin_job_posting_path(@job_posting), notice: "Job posting was successfully updated."
     else

@@ -1,11 +1,16 @@
 <%= link_to job_posting_path(job_posting), class: "job-card-link" do %>
   <div class="job-card">
     <div class="job-badges">
-      <% if job_posting.location.present? %>
-        <span class="badge location-badge"><%= job_posting.location %></span>
+      <% if job_posting.country.present? %>
+        <span class="badge location-badge"><%= job_posting.country %></span>
       <% end %>
-      <% if job_posting.visa_requirement == 'required' %>
+      <% case job_posting.visa_requirement %>
+      <% when 'required' %>
         <span class="badge rtw-badge">Right to work required</span>
+      <% when 'not_required' %>
+        <span class="badge rtw-not-required-badge">No right to work required</span>
+      <% when 'unknown' %>
+        <span class="badge rtw-unknown-badge">Visa requirements unknown</span>
       <% end %>
     </div>
     
