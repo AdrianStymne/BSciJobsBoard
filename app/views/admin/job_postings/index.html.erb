@@ -38,13 +38,6 @@
         
         <div class="admin-actions">
           <%= link_to "Edit", edit_admin_job_posting_path(job_posting), class: "url-link" %>
-          <% unless job_posting.approved %>
-            <%= link_to "Approve", approve_admin_job_posting_path(job_posting), 
-                method: :patch, 
-                data: { confirm: "Approve this job for publication?" }, 
-                class: "url-link", 
-                style: "color: #28a745;" %>
-          <% end %>
           <%= link_to "Delete", admin_job_posting_path(job_posting), 
               method: :delete, 
               data: { confirm: "Are you sure?" }, 

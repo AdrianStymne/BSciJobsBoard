@@ -1,4 +1,32 @@
 <div class="container">
+  <div class="filters-section">
+    <%= form_with url: root_path, method: :get, local: true, class: "filters-form" do |form| %>
+      <div class="filter-group">
+        <%= form.label :country, "Country", class: "filter-label" %>
+        <%= form.select :country, 
+            options_for_select([['All Countries', '']] + @available_countries.map { |country| [country, country] }, params[:country]), 
+            {}, 
+            { class: "filter-select", onchange: "this.form.submit();" } %>
+      </div>
+
+      <div class="filter-group">
+        <%= form.label :requires_right_to_work, "Visa Requirements", class: "filter-label" %>
+        <%= form.select :requires_right_to_work, 
+            options_for_select([
+              ['All Jobs', ''],
+              ['Right to work required', 'true'],
+              ['No right to work required', 'false']
+            ], params[:requires_right_to_work]), 
+            {}, 
+            { class: "filter-select", onchange: "this.form.submit();" } %>
+      </div>
+
+      <div class="filter-actions">
+        <%= link_to "Clear Filters", root_path, class: "clear-filters" %>
+      </div>
+    <% end %>
+  </div>
+
   <div class="job-listings">
     <% @job_postings.each do |job_posting| %>
       <%= render 'job_card', job_posting: job_posting %>
@@ -6,6 +34,10 @@
   </div>
 
   <% if @job_postings.empty? %>
-    <p class="empty-state">No jobs posted yet.</p>
+    <% if params[:country].present? || params[:requires_right_to_work].present? %>
+      <p class="empty-state">No jobs found matching your filters. <%= link_to "Clear filters", root_path, class: "url-link" %> to see all jobs.</p>
+    <% else %>
+      <p class="empty-state">No jobs posted yet.</p>
+    <% end %>
   <% end %>
 </div>
