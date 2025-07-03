@@ -134,6 +134,98 @@ h1 {
   font-size: 1.1em;
 }
 
+/* Job Detail Page Styles */
+.job-detail {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.job-header {
+  padding: 32px;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.back-link {
+  display: inline-block;
+  color: #6c757d;
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 20px;
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: #495057;
+}
+
+.job-header .job-badges {
+  margin-bottom: 16px;
+}
+
+.job-header .job-title {
+  font-size: 2.2em;
+  margin-bottom: 12px;
+  color: #2c3e50;
+}
+
+.job-header .job-date {
+  font-size: 1em;
+  margin-bottom: 0;
+}
+
+.job-content {
+  padding: 32px;
+}
+
+.job-content h3 {
+  color: #2c3e50;
+  font-size: 1.3em;
+  font-weight: 600;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.job-description {
+  margin-bottom: 32px;
+}
+
+.description-text {
+  color: #495057;
+  line-height: 1.7;
+  font-size: 1.05em;
+}
+
+.description-text p {
+  margin-bottom: 16px;
+}
+
+.job-apply {
+  background-color: #f8f9fa;
+  padding: 24px;
+  border-radius: 8px;
+}
+
+.application-link {
+  margin-top: 8px;
+}
+
+.url-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+  word-break: break-all;
+  display: inline-block;
+  padding: 8px 0;
+  transition: color 0.2s ease;
+}
+
+.url-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .container {
@@ -151,5 +243,17 @@ h1 {
   
   .job-listings {
     gap: 20px;
+  }
+  
+  .job-header {
+    padding: 24px;
+  }
+  
+  .job-content {
+    padding: 24px;
+  }
+  
+  .job-header .job-title {
+    font-size: 1.8em;
   }
 }

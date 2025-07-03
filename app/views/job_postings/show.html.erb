@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="job-detail">
+    <div class="job-header">
+      <%= link_to "← Back to jobs", root_path, class: "back-link" %>
+      
+      <div class="job-badges">
+        <% if @job_posting.location.present? %>
+          <span class="badge location-badge"><%= @job_posting.location %></span>
+        <% end %>
+        <% if @job_posting.requires_right_to_work %>
+          <span class="badge rtw-badge">Right to work required</span>
+        <% end %>
+      </div>
+      
+      <h1 class="job-title"><%= @job_posting.title %></h1>
+      <p class="job-date">Posted: <%= @job_posting.formatted_date_posted %></p>
+    </div>
+
+    <div class="job-content">
+      <div class="job-description">
+        <h3>Job Description</h3>
+        <div class="description-text">
+          <%= simple_format(@job_posting.description) %>
+        </div>
+      </div>
+
+      <div class="job-apply">
+        <h3>Community-provided link</h3>
+        <div class="application-link">
+          <%= link_to @job_posting.application_url, @job_posting.application_url, 
+              target: "_blank", 
+              rel: "noopener",
+              class: "url-link" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
