@@ -6,9 +6,6 @@ class JobSubmissionsController < ApplicationController
   def create
     @job_posting = JobPosting.new(job_posting_params)
     @job_posting.approved = false # Always require approval for public submissions
-
-    # Set default values for fields not in the simplified form
-    @job_posting.location = @job_posting.country || "Location TBD"
     @job_posting.visa_requirement = "unknown" # Default for public submissions
 
     if @job_posting.save

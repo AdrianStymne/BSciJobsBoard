@@ -16,11 +16,6 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :location, class: "form-label" %>
-    <%= form.text_field :location, class: "form-input" %>
-  </div>
-
-  <div class="form-group">
     <%= form.label :country, class: "form-label" %>
     <%= form.select :country, options_for_select(JobPosting.country_options.map { |country| [country, country] }, form.object.country), 
         { prompt: "Select a country" }, 

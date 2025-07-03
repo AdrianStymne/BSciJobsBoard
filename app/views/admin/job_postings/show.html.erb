@@ -7,8 +7,8 @@
   <div class="job-detail">
     <div class="job-header">
       <div class="job-badges">
-        <% if @job_posting.location.present? %>
-          <span class="badge location-badge"><%= @job_posting.location %></span>
+        <% if @job_posting.country.present? %>
+          <span class="badge location-badge"><%= @job_posting.country %></span>
         <% end %>
         <% case @job_posting.visa_requirement %>
         <% when 'required' %>

@@ -90,7 +90,6 @@ namespace :jobs do
         title: job_titles.sample,
         description: descriptions.sample +
                     "\n\nRequirements:\n• PhD or Master's in Psychology, Economics, or related field\n• 2+ years of experience in applied research\n• Strong statistical analysis skills\n• Experience with A/B testing\n\nWe offer competitive salary, excellent benefits, and the opportunity to make a real impact.",
-        location: countries.sample == "Remote" ? "Remote" : "#{[ 'London', 'New York', 'San Francisco', 'Berlin', 'Amsterdam', 'Toronto', 'Sydney', 'Paris', 'Stockholm', 'Copenhagen' ].sample}",
         country: countries.sample,
         visa_requirement: visa_requirements.sample,
         application_url: application_urls.sample,
