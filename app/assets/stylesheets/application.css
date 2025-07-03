@@ -338,6 +338,16 @@ body {
   margin-right: 20px;
 }
 
+.pending-badge {
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9em;
+  font-weight: 500;
+  margin: 0 10px;
+}
+
 .admin-actions {
   margin-top: 15px;
   padding-top: 15px;
@@ -376,6 +386,7 @@ body {
   font-size: 1em;
   font-family: inherit;
   transition: border-color 0.2s ease;
+  background-color: #fff;
 }
 
 .form-input:focus, .form-textarea:focus {
@@ -454,10 +465,19 @@ body {
   margin-bottom: 16px;
 }
 
-.contact-section {
-  margin-top: 40px;
-  padding-top: 32px;
-  border-top: 1px solid #f1f3f4;
+/* Form guidance section */
+.submission-guidance {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.submission-guidance p {
+  margin: 0;
+  color: #495057;
+  line-height: 1.6;
 }
 
 /* Responsive design */

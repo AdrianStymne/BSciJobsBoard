@@ -21,6 +21,13 @@
   </div>
 
   <div class="form-group">
+    <%= form.label :country, class: "form-label" %>
+    <%= form.select :country, options_for_select(JobPosting.country_options.map { |country| [country, country] }, form.object.country), 
+        { prompt: "Select a country" }, 
+        { class: "form-input" } %>
+  </div>
+
+  <div class="form-group">
     <%= form.label :application_url, "Application URL", class: "form-label" %>
     <%= form.url_field :application_url, class: "form-input" %>
   </div>
@@ -33,6 +40,11 @@
   <div class="form-group">
     <%= form.check_box :requires_right_to_work, class: "form-checkbox" %>
     <%= form.label :requires_right_to_work, "Requires right to work", class: "form-checkbox-label" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.check_box :approved, class: "form-checkbox" %>
+    <%= form.label :approved, "Approved for publication", class: "form-checkbox-label" %>
   </div>
 
   <div class="form-actions">

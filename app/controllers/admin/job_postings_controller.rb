@@ -1,10 +1,11 @@
 class Admin::JobPostingsController < ApplicationController
   http_basic_authenticate_with name: "admin", password: "password123"
 
-  before_action :set_job_posting, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_job_posting, only: [ :show, :edit, :update, :destroy, :approve ]
 
   def index
     @job_postings = JobPosting.all.order(created_at: :desc)
+    @pending_count = JobPosting.pending.count
   end
 
   def show
@@ -40,6 +41,11 @@ class Admin::JobPostingsController < ApplicationController
     redirect_to admin_job_postings_path, notice: "Job posting was successfully deleted."
   end
 
+  def approve
+    @job_posting.update(approved: true)
+    redirect_to admin_job_postings_path, notice: "Job posting approved!"
+  end
+
   private
 
   def set_job_posting
@@ -47,6 +53,6 @@ class Admin::JobPostingsController < ApplicationController
   end
 
   def job_posting_params
-    params.require(:job_posting).permit(:title, :description, :location, :requires_right_to_work, :application_url)
+    params.require(:job_posting).permit(:title, :description, :location, :country, :requires_right_to_work, :application_url, :approved)
   end
 end

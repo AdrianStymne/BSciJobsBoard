@@ -3,7 +3,9 @@
   
   <div class="admin-nav">
     <a href="<%= new_admin_job_posting_path %>" class="apply-button">Add New Job</a>
-    <a href="<%= admin_job_submissions_path %>" class="apply-button" style="background-color: #28a745;">View Submissions</a>
+    <% if @pending_count > 0 %>
+      <span class="pending-badge"><%= @pending_count %> pending approval</span>
+    <% end %>
     <a href="<%= root_path %>" class="url-link">← Back to Public Site</a>
   </div>
 
@@ -11,8 +13,17 @@
     <% @job_postings.each do |job_posting| %>
       <div class="job-card">
         <div class="job-badges">
+          <% if job_posting.approved %>
+            <span class="badge" style="background-color: #d4edda; color: #155724; border-color: #c3e6cb;">Published</span>
+          <% else %>
+            <span class="badge" style="background-color: #fff3cd; color: #856404; border-color: #ffeaa7;">Pending</span>
+          <% end %>
+          
           <% if job_posting.location.present? %>
             <span class="badge location-badge"><%= job_posting.location %></span>
+          <% end %>
+          <% if job_posting.country.present? %>
+            <span class="badge location-badge"><%= job_posting.country %></span>
           <% end %>
           <% if job_posting.requires_right_to_work %>
             <span class="badge rtw-badge">Right to work required</span>
@@ -27,6 +38,13 @@
         
         <div class="admin-actions">
           <%= link_to "Edit", edit_admin_job_posting_path(job_posting), class: "url-link" %>
+          <% unless job_posting.approved %>
+            <%= link_to "Approve", approve_admin_job_posting_path(job_posting), 
+                method: :patch, 
+                data: { confirm: "Approve this job for publication?" }, 
+                class: "url-link", 
+                style: "color: #28a745;" %>
+          <% end %>
           <%= link_to "Delete", admin_job_posting_path(job_posting), 
               method: :delete, 
               data: { confirm: "Are you sure?" }, 
