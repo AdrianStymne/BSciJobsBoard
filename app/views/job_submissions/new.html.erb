@@ -1,0 +1,59 @@
+<div class="container">
+  <h1>Submit a Job</h1>
+  <p class="form-intro">Submit your job posting for review. We'll get back to you within 24 hours.</p>
+
+  <div class="form-container">
+    <%= form_with model: @job_submission, url: job_submissions_path, local: true, class: "job-form" do |form| %>
+      <% if @job_submission.errors.any? %>
+        <div class="error-messages">
+          <h4><%= pluralize(@job_submission.errors.count, "error") %> prohibited this submission:</h4>
+          <ul>
+            <% @job_submission.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="form-group">
+        <%= form.label :company_name, "Company Name", class: "form-label" %>
+        <%= form.text_field :company_name, class: "form-input" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :contact_email, "Your Email", class: "form-label" %>
+        <%= form.email_field :contact_email, class: "form-input" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :title, "Job Title", class: "form-label" %>
+        <%= form.text_field :title, class: "form-input" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :location, class: "form-label" %>
+        <%= form.text_field :location, class: "form-input" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :application_url, "Application URL", class: "form-label" %>
+        <%= form.url_field :application_url, class: "form-input" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :description, "Job Description", class: "form-label" %>
+        <%= form.text_area :description, rows: 10, class: "form-textarea" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.check_box :requires_right_to_work, class: "form-checkbox" %>
+        <%= form.label :requires_right_to_work, "Requires right to work", class: "form-checkbox-label" %>
+      </div>
+
+      <div class="form-actions">
+        <%= form.submit "Submit Job for Review", class: "apply-button" %>
+        <%= link_to "Cancel", root_path, class: "url-link" %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<%= form_with model: [:admin, job_posting], local: true, class: "job-form" do |form| %>
+  <% if job_posting.errors.any? %>
+    <div class="error-messages">
+      <h4><%= pluralize(job_posting.errors.count, "error") %> prohibited this job posting from being saved:</h4>
+      <ul>
+        <% job_posting.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-input" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :location, class: "form-label" %>
+    <%= form.text_field :location, class: "form-input" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :application_url, "Application URL", class: "form-label" %>
+    <%= form.url_field :application_url, class: "form-input" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, rows: 10, class: "form-textarea" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.check_box :requires_right_to_work, class: "form-checkbox" %>
+    <%= form.label :requires_right_to_work, "Requires right to work", class: "form-checkbox-label" %>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit class: "apply-button" %>
+    <%= link_to "Cancel", admin_job_postings_path, class: "url-link" %>
+  </div>
+<% end %>

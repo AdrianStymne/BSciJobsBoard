@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="admin-nav">
+    <%= link_to "← Back to Admin", admin_job_postings_path, class: "url-link" %>
+    <%= link_to "View Job", admin_job_posting_path(@job_posting), class: "url-link" %>
+  </div>
+
+  <h1>Edit Job Posting</h1>
+
+  <div class="form-container">
+    <%= render 'form', job_posting: @job_posting %>
+  </div>
+</div>

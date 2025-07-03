@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="admin-nav">
+    <%= link_to "← Back to Admin", admin_job_postings_path, class: "url-link" %>
+    <%= link_to "Edit This Job", edit_admin_job_posting_path(@job_posting), class: "apply-button" %>
+  </div>
+
+  <div class="job-detail">
+    <div class="job-header">
+      <div class="job-badges">
+        <% if @job_posting.location.present? %>
+          <span class="badge location-badge"><%= @job_posting.location %></span>
+        <% end %>
+        <% if @job_posting.requires_right_to_work %>
+          <span class="badge rtw-badge">Right to work required</span>
+        <% end %>
+      </div>
+      
+      <h1 class="job-title"><%= @job_posting.title %></h1>
+      <p class="job-date">Posted: <%= @job_posting.formatted_date_posted %></p>
+    </div>
+
+    <div class="job-content">
+      <div class="job-description">
+        <h3>Job Description</h3>
+        <div class="description-text">

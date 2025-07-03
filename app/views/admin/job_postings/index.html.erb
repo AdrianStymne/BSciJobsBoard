@@ -1,0 +1,43 @@
+<div class="container">
+  <h1>Admin - Manage Job Postings</h1>
+  
+  <div class="admin-nav">
+    <a href="<%= new_admin_job_posting_path %>" class="apply-button">Add New Job</a>
+    <a href="<%= admin_job_submissions_path %>" class="apply-button" style="background-color: #28a745;">View Submissions</a>
+    <a href="<%= root_path %>" class="url-link">← Back to Public Site</a>
+  </div>
+
+  <div class="job-listings">
+    <% @job_postings.each do |job_posting| %>
+      <div class="job-card">
+        <div class="job-badges">
+          <% if job_posting.location.present? %>
+            <span class="badge location-badge"><%= job_posting.location %></span>
+          <% end %>
+          <% if job_posting.requires_right_to_work %>
+            <span class="badge rtw-badge">Right to work required</span>
+          <% end %>
+        </div>
+        
+        <h3 class="job-title"><%= job_posting.title %></h3>
+        <p class="job-summary"><%= job_posting.summary %></p>
+        <div class="job-meta">
+          <p class="job-date">Posted: <%= job_posting.formatted_date_posted %></p>
+        </div>
+        
+        <div class="admin-actions">
+          <%= link_to "Edit", edit_admin_job_posting_path(job_posting), class: "url-link" %>
+          <%= link_to "Delete", admin_job_posting_path(job_posting), 
+              method: :delete, 
+              data: { confirm: "Are you sure?" }, 
+              class: "url-link", 
+              style: "color: #dc3545;" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @job_postings.empty? %>
+    <p class="empty-state">No job postings yet. <%= link_to "Create the first one", new_admin_job_posting_path, class: "url-link" %>.</p>
+  <% end %>
+</div>
