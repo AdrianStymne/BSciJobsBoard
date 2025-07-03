@@ -1,0 +1,18 @@
+<%= link_to job_posting_path(job_posting), class: "job-card-link" do %>
+  <div class="job-card">
+    <div class="job-badges">
+      <% if job_posting.location.present? %>
+        <span class="badge location-badge"><%= job_posting.location %></span>
+      <% end %>
+      <% if job_posting.requires_right_to_work %>
+        <span class="badge rtw-badge">Right to work required</span>
+      <% end %>
+    </div>
+    
+    <h3 class="job-title"><%= job_posting.title %></h3>
+    <p class="job-summary"><%= job_posting.summary %></p>
+    <div class="job-meta">
+      <p class="job-date">Posted: <%= job_posting.formatted_date_posted %></p>
+    </div>
+  </div>
+<% end %>
