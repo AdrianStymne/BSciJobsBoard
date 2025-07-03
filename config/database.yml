@@ -79,20 +79,4 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  primary: &primary_production
-    <<: *default
-    database: bsci_jobs_2025_production
-    username: bsci_jobs_2025
-    password: <%= ENV["BSCI_JOBS_2025_DATABASE_PASSWORD"] %>
-  cache:
-    <<: *primary_production
-    database: bsci_jobs_2025_production_cache
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: bsci_jobs_2025_production_queue
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *primary_production
-    database: bsci_jobs_2025_production_cable
-    migrations_paths: db/cable_migrate
+  url: <%= ENV['DATABASE_URL'] %>
