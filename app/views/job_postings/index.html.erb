@@ -1,57 +1,77 @@
 <div class="container">
-  <div class="filters-section">
-    <%= form_with url: root_path, method: :get, local: true, class: "filters-form" do |form| %>
-      <div class="filter-group">
-        <h4 class="filter-title">Countries</h4>
-        <div class="checkbox-group">
-          <% @available_countries.each do |country| %>
-            <div class="checkbox-item">
-              <%= check_box_tag "countries[]", country, 
-                  (params[:countries] || []).include?(country), 
-                  { class: "filter-checkbox", id: "country_#{country.parameterize}", onchange: "this.form.submit();" } %>
-              <%= label_tag "country_#{country.parameterize}", country, class: "checkbox-label" %>
+  <div class="main-layout">
+    <aside class="sidebar">
+      <div class="about-content-sidebar">
+        <h2>About</h2>
+        
+        <p>This Behavioural Science jobs board is an outgrowth of a lovely WhatsApp community of behavioural scientists in the UK. People in the group share links and roles that they find elsewhere. As such, this is not a structured page, with a bunch of details - just a collection of links.</p>
+        
+        <p>If you have a link that you'd like to share, you can submit it in our form, and we'll format it and put it up for you.</p>
+        
+        <p>If you would like to get in touch with the admin, just make a job submission and put that in the description!</p>
+      </div>
+
+      <div class="filters-section">
+        <h2 class="section-title">Filters</h2>
+        <%= form_with url: root_path, method: :get, local: true, class: "filters-form" do |form| %>
+          <div class="filter-group">
+            <h4 class="filter-title">Countries</h4>
+            <div class="checkbox-group">
+              <% @available_countries.each do |country| %>
+                <div class="checkbox-item">
+                  <%= check_box_tag "countries[]", country, 
+                      (params[:countries] || []).include?(country), 
+                      { class: "filter-checkbox", id: "country_#{country.parameterize}", onchange: "this.form.submit();" } %>
+                  <%= label_tag "country_#{country.parameterize}", country, class: "checkbox-label" %>
+                </div>
+              <% end %>
             </div>
+          </div>
+
+          <div class="filter-group">
+            <h4 class="filter-title">Visa Requirements</h4>
+            <div class="checkbox-group">
+              <% @available_visa_requirements.each do |visa_req| %>
+                <div class="checkbox-item">
+                  <% display_text = case visa_req
+                       when 'required' then 'Right to work required'
+                       when 'not_required' then 'No right to work required'
+                       when 'unknown' then 'Unknown'
+                       else visa_req
+                       end %>
+                  <%= check_box_tag "visa_requirements[]", visa_req, 
+                      (params[:visa_requirements] || []).include?(visa_req), 
+                      { class: "filter-checkbox", id: "visa_#{visa_req}", onchange: "this.form.submit();" } %>
+                  <%= label_tag "visa_#{visa_req}", display_text, class: "checkbox-label" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="filter-actions">
+            <%= link_to "Clear All Filters", root_path, class: "clear-filters" %>
+          </div>
+        <% end %>
+      </div>
+    </aside>
+
+    <main class="jobs-main">
+      <div class="job-listings-container">
+        <h2 class="section-title">Jobs</h2>
+        <div class="job-listings">
+          <% @job_postings.each do |job_posting| %>
+            <%= render 'job_card', job_posting: job_posting %>
           <% end %>
         </div>
-      </div>
 
-      <div class="filter-group">
-        <h4 class="filter-title">Visa Requirements</h4>
-        <div class="checkbox-group">
-          <% @available_visa_requirements.each do |visa_req| %>
-            <div class="checkbox-item">
-              <% display_text = case visa_req
-                   when 'required' then 'Right to work required'
-                   when 'not_required' then 'No right to work required'
-                   when 'unknown' then 'Unknown'
-                   else visa_req
-                   end %>
-              <%= check_box_tag "visa_requirements[]", visa_req, 
-                  (params[:visa_requirements] || []).include?(visa_req), 
-                  { class: "filter-checkbox", id: "visa_#{visa_req}", onchange: "this.form.submit();" } %>
-              <%= label_tag "visa_#{visa_req}", display_text, class: "checkbox-label" %>
-            </div>
+        <% if @job_postings.empty? %>
+          <% if (params[:countries].present? && params[:countries].any?(&:present?)) || (params[:visa_requirements].present? && params[:visa_requirements].any?(&:present?)) %>
+            <p class="empty-state">No jobs found matching your filters. <%= link_to "Clear filters", root_path, class: "url-link" %> to see all jobs.</p>
+          <% else %>
+            <p class="empty-state">No jobs posted yet.</p>
           <% end %>
-        </div>
+        <% end %>
       </div>
-
-      <div class="filter-actions">
-        <%= link_to "Clear All Filters", root_path, class: "clear-filters" %>
-      </div>
-    <% end %>
+    </main>
   </div>
-
-  <div class="job-listings">
-    <% @job_postings.each do |job_posting| %>
-      <%= render 'job_card', job_posting: job_posting %>
-    <% end %>
-  </div>
-
-  <% if @job_postings.empty? %>
-    <% if (params[:countries].present? && params[:countries].any?(&:present?)) || (params[:visa_requirements].present? && params[:visa_requirements].any?(&:present?)) %>
-      <p class="empty-state">No jobs found matching your filters. <%= link_to "Clear filters", root_path, class: "url-link" %> to see all jobs.</p>
-    <% else %>
-      <p class="empty-state">No jobs posted yet.</p>
-    <% end %>
-  <% end %>
 </div>
