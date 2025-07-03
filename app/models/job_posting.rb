@@ -1,10 +1,13 @@
 class JobPosting < ApplicationRecord
+  VISA_REQUIREMENTS = [ "required", "not_required", "unknown" ].freeze
+
   validates :title, presence: true, length: { maximum: 255 }
   validates :description, presence: true
   validates :location, presence: true, length: { maximum: 255 }
   validates :application_url, presence: true, format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]) }
   validates :date_posted, presence: true
   validates :country, length: { maximum: 255 }
+  validates :visa_requirement, inclusion: { in: VISA_REQUIREMENTS }
 
   scope :recent, -> { order(date_posted: :desc) }
   scope :published, -> { where("date_posted <= ?", Time.current) }
@@ -12,6 +15,7 @@ class JobPosting < ApplicationRecord
   scope :pending, -> { where(approved: false) }
 
   before_validation :set_date_posted, on: :create
+  before_validation :set_default_visa_requirement, on: :create
 
   def summary
     description.truncate(200)
@@ -19,6 +23,17 @@ class JobPosting < ApplicationRecord
 
   def formatted_date_posted
     date_posted.strftime("%B %d, %Y")
+  end
+
+  def visa_requirement_display
+    case visa_requirement
+    when "required"
+      "Right to work required"
+    when "not_required"
+      "No right to work required"
+    when "unknown"
+      "Visa requirements unknown"
+    end
   end
 
   def self.country_options
@@ -54,9 +69,21 @@ class JobPosting < ApplicationRecord
     priority_countries + all_countries.sort
   end
 
+  def self.visa_requirement_options
+    [
+      [ "Right to work required", "required" ],
+      [ "No right to work required", "not_required" ],
+      [ "Unknown", "unknown" ]
+    ]
+  end
+
   private
 
   def set_date_posted
     self.date_posted ||= Time.current
+  end
+
+  def set_default_visa_requirement
+    self.visa_requirement ||= "unknown"
   end
 end

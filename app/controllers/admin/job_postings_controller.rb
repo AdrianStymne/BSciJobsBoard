@@ -53,6 +53,6 @@ class Admin::JobPostingsController < ApplicationController
   end
 
   def job_posting_params
-    params.require(:job_posting).permit(:title, :description, :location, :country, :requires_right_to_work, :application_url, :approved)
+    params.require(:job_posting).permit(:title, :description, :location, :country, :visa_requirement, :application_url, :approved)
   end
 end

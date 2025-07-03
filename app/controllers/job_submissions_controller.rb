@@ -9,7 +9,7 @@ class JobSubmissionsController < ApplicationController
 
     # Set default values for fields not in the simplified form
     @job_posting.location = @job_posting.country || "Location TBD"
-    @job_posting.requires_right_to_work = false
+    @job_posting.visa_requirement = "unknown" # Default for public submissions
 
     if @job_posting.save
       redirect_to root_path, notice: "Thank you! Your job submission has been received and will be reviewed shortly."

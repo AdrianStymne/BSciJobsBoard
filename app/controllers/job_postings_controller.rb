@@ -2,18 +2,19 @@ class JobPostingsController < ApplicationController
   def index
     @job_postings = JobPosting.approved.published.recent
 
-    # Apply country filter
-    if params[:country].present?
-      @job_postings = @job_postings.where(country: params[:country])
+    # Apply country filter (multiple selection)
+    if params[:countries].present? && params[:countries].any?(&:present?)
+      @job_postings = @job_postings.where(country: params[:countries].reject(&:blank?))
     end
 
-    # Apply right to work filter
-    if params[:requires_right_to_work].present?
-      @job_postings = @job_postings.where(requires_right_to_work: params[:requires_right_to_work] == "true")
+    # Apply visa requirement filter (multiple selection)
+    if params[:visa_requirements].present? && params[:visa_requirements].any?(&:present?)
+      @job_postings = @job_postings.where(visa_requirement: params[:visa_requirements].reject(&:blank?))
     end
 
-    # Get unique countries for filter dropdown (only from approved jobs)
+    # Get unique countries and visa requirements for filter options (only from approved jobs)
     @available_countries = JobPosting.approved.published.distinct.pluck(:country).compact.sort
+    @available_visa_requirements = JobPosting.approved.published.distinct.pluck(:visa_requirement).compact
   end
 
   def show

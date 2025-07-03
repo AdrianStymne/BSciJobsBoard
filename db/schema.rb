@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_03_141245) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_03_150942) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -18,16 +18,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_141245) do
     t.string "title", null: false
     t.text "description", null: false
     t.string "location", null: false
-    t.boolean "requires_right_to_work", default: false, null: false
     t.string "application_url", null: false
     t.datetime "date_posted", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "approved", default: false, null: false
     t.string "country"
+    t.string "visa_requirement", default: "unknown"
     t.index ["approved"], name: "index_job_postings_on_approved"
     t.index ["country"], name: "index_job_postings_on_country"
     t.index ["created_at"], name: "index_job_postings_on_created_at"
     t.index ["date_posted"], name: "index_job_postings_on_date_posted"
+    t.index ["visa_requirement"], name: "index_job_postings_on_visa_requirement"
   end
 end

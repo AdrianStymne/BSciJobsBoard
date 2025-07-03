@@ -25,7 +25,7 @@
           <% if job_posting.country.present? %>
             <span class="badge location-badge"><%= job_posting.country %></span>
           <% end %>
-          <% if job_posting.requires_right_to_work %>
+          <% if job_posting.visa_requirement == 'required' %>
             <span class="badge rtw-badge">Right to work required</span>
           <% end %>
         </div>
